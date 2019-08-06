@@ -9,6 +9,11 @@ local frame = CreateFrame('Frame')
 
 local reagents = {
 	['DRUID'] = {
+		{
+			-- subtables use the notation {targetAmount, minimumPlayerLevel}
+			['Bean Soup'] = {5, 0},
+			['Versicolor Treat'] = {1, 5},
+		},
 		['Tough Hunk of Bread'] = 14,
 		['Flintweed Seed'] = 0, -- Rebirth VI
 		['Wild Berries'] = 0, -- Gift of the Wild I
@@ -61,6 +66,46 @@ local reagents = {
 	},
 }
 
+local function GetRequiredItemCount(itemName)
+	local _, playerClass = UnitClass("player")
+	local playerLevel = UnitLevel("player")
+
+	local classReagents = reagents[playerClass]
+	local itemCount = 0
+
+	for k, v in pairs(classReagents) do
+		if type(v) == 'table' then
+			if v[itemName] ~= nil then
+				local itemInfo = nil
+
+				for k1, v1 in pairs(v) do
+					if itemInfo == nil and v1[2] <= playerLevel then						
+						itemInfo = v1		
+
+						if itemName == k1 then
+							itemCount = v1[1]
+						end
+					end
+
+					if itemInfo ~= nil and v1[2] <= playerLevel and v1[2] > itemInfo[2] then
+						itemInfo = v1
+
+						if itemName == k1 then
+							itemCount = v1[1]
+						end					
+					end
+				end
+			end
+		else
+			if k == itemName then itemCount = v break end
+		end
+
+		if itemCount > 0 then break end
+	end
+
+	return itemCount
+end
+
 local function OnEvent(event, ...)
 	-- on appearance of the merchant dialog, register to receive subsequent merchant stock updates
 	if event == 'MERCHANT_SHOW' then
@@ -80,11 +125,12 @@ local function OnEvent(event, ...)
 
 	-- the merchant stock is ready, buy items
 	local numItems = GetMerchantNumItems()
-	local _, playerClass = UnitClass("player")
 	for itemIndex = 1, numItems do
-		local itemName, _, price, quantity, numAvailable, isPurchasable = GetMerchantItemInfo(itemIndex)
+		local itemName, _, price, quantity, numAvailable, isPurchasable = GetMerchantItemInfo(itemIndex)		
 
-		local requiredItemCount = reagents[playerClass][itemName] or 0
+		local requiredItemCount = GetRequiredItemCount(itemName)
+		print('required: ' .. requiredItemCount)
+
 		local posessItemCount = GetItemCount(itemName) or 0
 		local buyItemCount = requiredItemCount - posessItemCount
 

@@ -14,6 +14,7 @@ local function OnEvent(event, ...)
 			for slot = 1, GetContainerNumSlots(bag) do
 				local _, _, _, quality, _, _, itemLink = GetContainerItemInfo(bag, slot)
 
+				-- sell all items of 'gray' quality in a non-empty bag slot
 				if itemLink ~= nil and quality == 0 then					
 					UseContainerItem(bag, slot)								
 					Fixate:Print('Sold ' .. itemLink)

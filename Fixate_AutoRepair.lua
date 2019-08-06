@@ -12,10 +12,8 @@ local function OnEvent(event, ...)
 
 	if canRepair == nil then return end
 
-	money = GetMoney()
-
 	if repairAllCost > 0 then
-		if repairAllCost <= money then
+		if repairAllCost <= GetMoney() then
 			RepairAllItems()
 
 			Fixate:Print('Repaired all equipment for ' .. GetCoinText(repairAllCost))
