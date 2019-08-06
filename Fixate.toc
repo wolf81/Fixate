@@ -1,0 +1,10 @@
+## Interface: 80200
+## Title : Fixate
+## Notes: Fixate on playing the game, simplify chores!
+## Author: Wolfgang Schreurs
+## SavedVariables: Fixate_Defaults
+Fixate_Restock.lua
+Fixate_AutoRepair.lua
+Fixate_EventCapture.lua
+Fixate_JunkTrader.lua
+Fixate.lua
