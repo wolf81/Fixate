@@ -9,6 +9,7 @@ local frame = CreateFrame('Frame')
 
 local reagents = {
 	['DRUID'] = {
+		['Tough Hunk of Bread'] = 14,
 		['Flintweed Seed'] = 0, -- Rebirth VI
 		['Wild Berries'] = 0, -- Gift of the Wild I
 		['Wild Thornroot'] = 0, -- Gift of the Wild II
@@ -68,8 +69,8 @@ local function OnEvent(event, ...)
 
 	-- process all merchant stock, to make sure the merchant is ready to trade
 	local numItems = GetMerchantNumItems()
-	for indexItem = 1, numItems do
-		local itemName = GetMerchantItemInfo(indexItem)
+	for itemIndex = 1, numItems do
+		local itemName = GetMerchantItemInfo(itemIndex)
 
 		if itemName == nil then return end -- wait for update	
 	end
@@ -80,19 +81,29 @@ local function OnEvent(event, ...)
 	-- the merchant stock is ready, buy items
 	local numItems = GetMerchantNumItems()
 	local _, playerClass = UnitClass("player")
-	for indexItem = 1, numItems do
-		local itemName, _, price, _, numAvailable, isPurchasable = GetMerchantItemInfo(indexItem)
+	for itemIndex = 1, numItems do
+		local itemName, _, price, quantity, numAvailable, isPurchasable = GetMerchantItemInfo(itemIndex)
 
 		local requiredItemCount = reagents[playerClass][itemName] or 0
 		local posessItemCount = GetItemCount(itemName) or 0
 		local buyItemCount = requiredItemCount - posessItemCount
 
+		local money = GetMoney()
+		local totalCost = math.ceil(buyItemCount / quantity) * price
+
+		if money < totalCost then
+			local itemLink = GetMerchantItemLink(itemIndex)
+			Fixate:Print('You don\'t have enough money to buy ' .. itemLink)
+			Fixate:Print('You have ' .. GetCoinText(money))
+			Fixate:Print('You need ' .. GetCoinText(totalCost))
+			return
+		end
+
 		-- TODO: 
-		-- 1. make sure we have enough money
 		-- 2. buy reagents based on player level		
 		if buyItemCount > 0 then 			
 			Fixate:Print('Buy ' .. itemName .. ' x' .. buyItemCount)
-			BuyMerchantItem(indexItem, buyItemCount)
+			BuyMerchantItem(itemIndex, buyItemCount)
 		end
 	end
 end
