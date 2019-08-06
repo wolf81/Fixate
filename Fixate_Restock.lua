@@ -73,21 +73,23 @@ local function GetRequiredItemCount(itemName)
 	local classReagents = reagents[playerClass]
 	local itemCount = 0
 
-	for k, v in pairs(classReagents) do
+	for k, v in pairs(classReagents) do		
 		if type(v) == 'table' then
+			-- check if the item exists in the subtable and if so, process table
 			if v[itemName] ~= nil then
 				local itemInfo = nil
 
+				-- find the highest level item available for the player from the subtable
 				for k1, v1 in pairs(v) do
+					-- select the first usable reagent based on player level
 					if itemInfo == nil and v1[2] <= playerLevel then						
 						itemInfo = v1		
 
 						if itemName == k1 then
 							itemCount = v1[1]
 						end
-					end
-
-					if itemInfo ~= nil and v1[2] <= playerLevel and v1[2] > itemInfo[2] then
+					-- select the highest usable reagent based on player level
+					elseif itemInfo ~= nil and v1[2] <= playerLevel and v1[2] > itemInfo[2] then
 						itemInfo = v1
 
 						if itemName == k1 then
@@ -96,10 +98,11 @@ local function GetRequiredItemCount(itemName)
 					end
 				end
 			end
-		else
+		else			
 			if k == itemName then itemCount = v break end
 		end
 
+		-- if an item with the same name was found, stop processing the reagents table
 		if itemCount > 0 then break end
 	end
 
