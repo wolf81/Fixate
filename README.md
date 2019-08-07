@@ -5,7 +5,8 @@ This addon is meant to reduce some chores in WoW, to simplify the mundane stuff 
 The current provided functionality is as follows:
 - AutoRepair: automatically repair your character when it talks to a merchant that can repair.
 - EventCapture: automatically create screenshots on important events, like boss kills and level increase.
-- JunkTrader: automatically sell junk items
+- JunkTrader: automatically sell junk (grey) items.
+- (WIP): Restock: automatically restock reagents based on class.
 
 Fixate has a slash menu accessible through either `/fixate` or `/fx`. Currently only a single option is supported `debug`. Calling `fixate debug` will toggle debug mode, providing more detailed logging. 
 
@@ -26,9 +27,9 @@ MyClass = {}
 MyClass.__index = MyClass
 
 function MyClass:New()
-	local self = {}    
+    local self = {}    
     setmetatable(self, MyClass)
-	return self
+    return self
 end
 ```
 
