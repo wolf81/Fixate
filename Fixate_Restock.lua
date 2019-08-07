@@ -36,7 +36,7 @@ local reagents = {
 		},
 	},
 	['HUNTER'] = {
-		-- arrows
+		-- arrows, pet food
 	},
 	['ROGUE'] = {
 		{
@@ -62,24 +62,46 @@ local reagents = {
 		},
 	},
 	['PRIEST'] = {
-		['Holy Candle'] = 0, -- Prayer of Fortitude I
-		['Sacred Candle'] = 0, -- Prayer of Fortitude II, Prayer of Spirit & Shadow Protection I
-		['Light Feather'] = 0, -- Levitate
+		{
+			['Holy Candle'] 		= {10, 48}, -- Prayer of Fortitude I
+			['Sacred Candle'] 		= {20, 60}, -- Prayer of Fortitude II, Prayer of Spirit & Shadow Protection I
+		},
+		{
+			['Light Feather'] 		= {20, 34}, -- Levitate
+		},
 	},
 	['SHAMAN'] = {
-		['Ankh'] = 0, -- Reincarnation
-		['Shiny Fish Scales'] = 0, -- Water Breathing
-		['Fish Oil'] = 0, -- Water Walking
+		{
+			['Ankh'] 				= {5, 30}, -- Reincarnation
+		},
+		{
+			['Shiny Fish Scales'] 	= {20, 22}, -- Water Breathing
+		},
+		{
+			['Fish Oil'] 			= {20, 28}, -- Water Walking
+		},
 	},
 	['MAGE'] = {
-		['Arcane Powder'] = 0, -- Ritual of Refreshment
-		['Rune of Portals'] = 0, -- Portal
-		['Rune of Teleportation'] = 0, -- Teleport
-		['Light Feather'] = 0, -- Slow fall
+		{
+			['Arcane Powder'] 		= {20, 56}, -- Ritual of Refreshment
+		},
+		{
+			['Rune of Portals'] 	= {10, 40}, -- Portal
+		},
+		{
+			['Rune of Teleportation'] = {10, 20}, -- Teleport
+		},
+		{
+			['Light Feather'] 		= {12, 20}, -- Slow fall
+		},
 	},
 	['WARLOCK'] = {
-		['Demonic Figurine'] = 0, -- Ritual of Doom
-		['Infernal Stone'] = 0, -- Inferno
+		{
+			['Demonic Figurine'] 	= {1, 60}, -- Ritual of Doom
+		},
+		{
+			['Infernal Stone'] 		= {5, 50}, -- Inferno
+		},
 	},
 }
 
@@ -157,6 +179,7 @@ local function OnEvent(event, ...)
 		local money = GetMoney()
 		local totalCost = math.ceil(buyItemCount / quantity) * price
 
+		-- TODO: limit buy amount to numAvailable
 		if money < totalCost then
 			local itemLink = GetMerchantItemLink(itemIndex)
 			Fixate:Print('You don\'t have enough money to buy ' .. itemLink)
