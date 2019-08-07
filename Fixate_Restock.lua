@@ -11,38 +11,55 @@ local reagents = {
 	['DRUID'] = {
 		{
 			-- subtables use the notation {targetAmount, minimumPlayerLevel}
-			['Bean Soup'] = {5, 0},
-			['Versicolor Treat'] = {1, 5},
+			['Maple Seed'] 			= {5, 20}, -- Rebirth I
+			['Stranglethorn Seed'] 	= {5, 30}, -- Rebirth II
+			['Ashwood Seed'] 		= {5, 40}, -- Rebirth III
+			['Hornbeam Seed'] 		= {5, 50}, -- Rebirth IV
+			['Ironwood Seed'] 		= {20, 60}, -- Rebirth V
+			['Flintweed Seed'] 		= {20, 70}, -- Rebirth VI
 		},
-		['Tough Hunk of Bread'] = 14,
-		['Flintweed Seed'] = 0, -- Rebirth VI
-		['Wild Berries'] = 0, -- Gift of the Wild I
-		['Wild Thornroot'] = 0, -- Gift of the Wild II
-		['Wild Quillvine'] = 0, -- Gift of the Wild III
-		['Maple Seed'] = 0, -- Rebirth I
-		['Stranglethorn Seed'] = 0, -- Rebirth II
-		['Ashwood Seed'] = 0, -- Rebirth III
-		['Hornbeam Seed'] = 0, -- Rebirth IV
-		['Ironwood Seed'] = 0, -- Rebirth V
+		{
+			['Wild Berries'] 		= {10, 50}, -- Gift of the Wild I
+			['Wild Thornroot'] 		= {20, 60}, -- Gift of the Wild II
+			['Wild Quillvine'] 		= {20, 70}, -- Gift of the Wild III			
+		},
 	},
 	['WARRIOR'] = {
 		-- don't need reagents
 	},
 	['PALADIN']	= {
-		['Symbol of Kings'] = 0, -- Greater Blessing of Kings, Light, Might, Salvation, Wisdom
-		['Symbol of Divinity'] = 0, -- Divine Intervention
+		{
+			['Symbol of Kings'] 	= {100, 52}, -- Greater Blessing of Kings, Light, Might, Salvation, Wisdom
+		},
+		{
+			['Symbol of Divinity'] 	= {5, 30}, -- Divine Intervention
+		},
 	},
 	['HUNTER'] = {
 		-- arrows
 	},
 	['ROGUE'] = {
-		['Essence of Agony'] = 0, -- Crippling Poison II & Mind-numbing Poison III & Wound Poison III, IV
-		['Essence of Pain'] = 0, -- Crippling & Mind-numbing Poison I, II
-		['Flash Powder'] = 0, -- Vanish
-		['Dust of Decay'] = 0, -- Instant & Mind-numbing Poison I, II
-		['Dust of Detorioration'] = 0, -- Instant Poison
-		['Deathweed'] = 0, -- Deadly Poison
-		['Thieves\' Tools'] = 0, -- Lockpicking, also received from quest
+		{
+			['Essence of Agony'] 	= {20, 48}, -- Crippling Poison II & Mind-numbing Poison III & Wound Poison III, IV			
+		},
+		{
+			['Essence of Pain'] 	= {20, 20}, -- Crippling & Mind-numbing Poison I, II
+		},
+		{
+			['Flash Powder'] 		= {20, 22}, -- Vanish			
+		},
+		{
+			['Dust of Decay'] 		= {20, 20}, -- Instant & Mind-numbing Poison I, II
+		},
+		{
+			['Deathweed'] 			= {20, 30}, -- Deadly Poison
+		},
+		{
+			['Thieves\' Tools'] 	= {1, 15}, -- Lockpicking, also received from quest
+		},		
+		{
+			['Dust of Deterioration'] = {20, 36}, -- Instant Poison
+		},
 	},
 	['PRIEST'] = {
 		['Holy Candle'] = 0, -- Prayer of Fortitude I
@@ -66,7 +83,9 @@ local reagents = {
 	},
 }
 
-local function GetRequiredItemCount(itemName)
+-- determine the reagent item count based on player level and class, e.g.:
+-- druid level 30: buy Stranglethorn Seed
+local function GetRequiredItemCountForPlayer(itemName)
 	local _, playerClass = UnitClass("player")
 	local playerLevel = UnitLevel("player")
 
@@ -131,9 +150,7 @@ local function OnEvent(event, ...)
 	for itemIndex = 1, numItems do
 		local itemName, _, price, quantity, numAvailable, isPurchasable = GetMerchantItemInfo(itemIndex)		
 
-		local requiredItemCount = GetRequiredItemCount(itemName)
-		print('required: ' .. requiredItemCount)
-
+		local requiredItemCount = GetRequiredItemCountForPlayer(itemName)
 		local posessItemCount = GetItemCount(itemName) or 0
 		local buyItemCount = requiredItemCount - posessItemCount
 
@@ -148,8 +165,6 @@ local function OnEvent(event, ...)
 			return
 		end
 
-		-- TODO: 
-		-- 2. buy reagents based on player level		
 		if buyItemCount > 0 then 			
 			Fixate:Print('Buy ' .. itemName .. ' x' .. buyItemCount)
 			BuyMerchantItem(itemIndex, buyItemCount)
