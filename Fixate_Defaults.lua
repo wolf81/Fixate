@@ -1,3 +1,3 @@
 Fixate_Defaults = {
-	['Debug'] = false
+	['Debug'] = true
 }

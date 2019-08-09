@@ -1,10 +1,12 @@
-## Interface: 80200
+## Interface: 11302
 ## Title : Fixate
 ## Notes: Fixate on playing the game, simplify chores!
 ## Author: Wolfgang Schreurs
 ## SavedVariables: Fixate_Defaults
+Fixate_Defaults.lua
 Fixate_Restock.lua
 Fixate_AutoRepair.lua
 Fixate_EventCapture.lua
 Fixate_JunkTrader.lua
+Fixate_Questimate.lua
 Fixate.lua

@@ -42,6 +42,9 @@ local function OnEvent(event, ...)
 
 	local restock = Restock:New()
 	restock.Initialize()
+
+	local questimate = Questimate:New()
+	questimate.Initialize()
 end
 
 -- Public

@@ -9,145 +9,132 @@ local frame = CreateFrame('Frame')
 
 local reagents = {
 	['DRUID'] = {
-		{
-			-- subtables use the notation {targetAmount, minimumPlayerLevel}
-			['Maple Seed'] 			= {5, 20}, -- Rebirth I
-			['Stranglethorn Seed'] 	= {5, 30}, -- Rebirth II
-			['Ashwood Seed'] 		= {5, 40}, -- Rebirth III
-			['Hornbeam Seed'] 		= {5, 50}, -- Rebirth IV
-			['Ironwood Seed'] 		= {20, 60}, -- Rebirth V
-			['Flintweed Seed'] 		= {20, 70}, -- Rebirth VI
+		['Wrath'] = {
+			{1, 'Bean Soup', 1}
 		},
-		{
-			['Wild Berries'] 		= {10, 50}, -- Gift of the Wild I
-			['Wild Thornroot'] 		= {20, 60}, -- Gift of the Wild II
-			['Wild Quillvine'] 		= {20, 70}, -- Gift of the Wild III			
+		['Rebirth'] = {
+			{1, 'Maple Seed', 5},
+			{2, 'Stranglethorn Seed', 5},
+			{3, 'Ashwood Seed', 5},
+			{4, 'Hornbeam Seed', 5},
+			{5, 'Ironwood Seed', 5},
+			{6, 'Flintweed Seed', 5},			
 		},
-	},
-	['WARRIOR'] = {
-		-- don't need reagents
-	},
-	['PALADIN']	= {
-		{
-			['Symbol of Kings'] 	= {100, 52}, -- Greater Blessing of Kings, Light, Might, Salvation, Wisdom
-		},
-		{
-			['Symbol of Divinity'] 	= {5, 30}, -- Divine Intervention
-		},
-	},
-	['HUNTER'] = {
-		-- arrows, pet food
-	},
-	['ROGUE'] = {
-		{
-			['Essence of Agony'] 	= {20, 48}, -- Crippling Poison II & Mind-numbing Poison III & Wound Poison III, IV			
-		},
-		{
-			['Essence of Pain'] 	= {20, 20}, -- Crippling & Mind-numbing Poison I, II
-		},
-		{
-			['Flash Powder'] 		= {20, 22}, -- Vanish			
-		},
-		{
-			['Dust of Decay'] 		= {20, 20}, -- Instant & Mind-numbing Poison I, II
-		},
-		{
-			['Deathweed'] 			= {20, 30}, -- Deadly Poison
-		},
-		{
-			['Thieves\' Tools'] 	= {1, 15}, -- Lockpicking, also received from quest
-		},		
-		{
-			['Dust of Deterioration'] = {20, 36}, -- Instant Poison
-		},
-	},
-	['PRIEST'] = {
-		{
-			['Holy Candle'] 		= {10, 48}, -- Prayer of Fortitude I
-			['Sacred Candle'] 		= {20, 60}, -- Prayer of Fortitude II, Prayer of Spirit & Shadow Protection I
-		},
-		{
-			['Light Feather'] 		= {20, 34}, -- Levitate
-		},
-	},
-	['SHAMAN'] = {
-		{
-			['Ankh'] 				= {5, 30}, -- Reincarnation
-		},
-		{
-			['Shiny Fish Scales'] 	= {20, 22}, -- Water Breathing
-		},
-		{
-			['Fish Oil'] 			= {20, 28}, -- Water Walking
-		},
-	},
-	['MAGE'] = {
-		{
-			['Arcane Powder'] 		= {20, 56}, -- Ritual of Refreshment
-		},
-		{
-			['Rune of Portals'] 	= {10, 40}, -- Portal
-		},
-		{
-			['Rune of Teleportation'] = {10, 20}, -- Teleport
-		},
-		{
-			['Light Feather'] 		= {12, 20}, -- Slow fall
-		},
-	},
-	['WARLOCK'] = {
-		{
-			['Demonic Figurine'] 	= {1, 60}, -- Ritual of Doom
-		},
-		{
-			['Infernal Stone'] 		= {5, 50}, -- Inferno
-		},
+		['Gift of the Wild'] = {
+			{1, 'Wild Berries', 10},
+			{2, 'Wild Thornroot', 20}, -- level 60
+			{3, 'Wild Quillvine', 20},
+		}
 	},
 }
+	-- ['WARRIOR'] = {
+	-- 	-- don't need reagents
+	-- },
+	-- ['PALADIN']	= {
+	-- 	{
+	-- 		['Symbol of Kings'] 	= {100, 52}, -- Greater Blessing of Kings, Light, Might, Salvation, Wisdom
+	-- 	},
+	-- 	{
+	-- 		['Symbol of Divinity'] 	= {5, 30}, -- Divine Intervention
+	-- 	},
+	-- },
+	-- ['HUNTER'] = {
+	-- 	-- arrows, pet food
+	-- },
+	-- ['ROGUE'] = {
+	-- 	{
+	-- 		['Essence of Agony'] 	= {20, 48}, -- Crippling Poison II & Mind-numbing Poison III & Wound Poison III, IV			
+	-- 	},
+	-- 	{
+	-- 		['Essence of Pain'] 	= {20, 20}, -- Crippling & Mind-numbing Poison I, II
+	-- 	},
+	-- 	{
+	-- 		['Flash Powder'] 		= {20, 22}, -- Vanish			
+	-- 	},
+	-- 	{
+	-- 		['Dust of Decay'] 		= {20, 20}, -- Instant & Mind-numbing Poison I, II
+	-- 	},
+	-- 	{
+	-- 		['Deathweed'] 			= {20, 30}, -- Deadly Poison
+	-- 	},
+	-- 	{
+	-- 		['Thieves\' Tools'] 	= {1, 15}, -- Lockpicking, also received from quest
+	-- 	},		
+	-- 	{
+	-- 		['Dust of Deterioration'] = {20, 36}, -- Instant Poison
+	-- 	},
+	-- },
+	-- ['PRIEST'] = {
+	-- 	{
+	-- 		['Holy Candle'] 		= {10, 48}, -- Prayer of Fortitude I
+	-- 		['Sacred Candle'] 		= {20, 60}, -- Prayer of Fortitude II, Prayer of Spirit & Shadow Protection I
+	-- 	},
+	-- 	{
+	-- 		['Light Feather'] 		= {20, 34}, -- Levitate
+	-- 	},
+	-- },
+	-- ['SHAMAN'] = {
+	-- 	{
+	-- 		['Ankh'] 				= {5, 30}, -- Reincarnation
+	-- 	},
+	-- 	{
+	-- 		['Shiny Fish Scales'] 	= {20, 22}, -- Water Breathing
+	-- 	},
+	-- 	{
+	-- 		['Fish Oil'] 			= {20, 28}, -- Water Walking
+	-- 	},
+	-- },
+	-- ['MAGE'] = {
+	-- 	{
+	-- 		['Arcane Powder'] 		= {20, 56}, -- Ritual of Refreshment
+	-- 	},
+	-- 	{
+	-- 		['Rune of Portals'] 	= {10, 40}, -- Portal
+	-- 	},
+	-- 	{
+	-- 		['Rune of Teleportation'] = {10, 20}, -- Teleport
+	-- 	},
+	-- 	{
+	-- 		['Light Feather'] 		= {12, 20}, -- Slow fall
+	-- 	},
+	-- },
+	-- ['WARLOCK'] = {
+	-- 	{
+	-- 		['Demonic Figurine'] 	= {1, 60}, -- Ritual of Doom
+	-- 	},
+	-- 	{
+	-- 		['Infernal Stone'] 		= {5, 50}, -- Inferno
+	-- 	},
+	-- },
+-- }
 
 -- determine the reagent item count based on player level and class, e.g.:
 -- druid level 30: buy Stranglethorn Seed
 local function GetRequiredItemCountForPlayer(itemName)
 	local _, playerClass = UnitClass("player")
-	local playerLevel = UnitLevel("player")
 
 	local classReagents = reagents[playerClass]
 	local itemCount = 0
+	local spellInfo = nil
 
-	for k, v in pairs(classReagents) do		
-		if type(v) == 'table' then
-			-- check if the item exists in the subtable and if so, process table
-			if v[itemName] ~= nil then
-				local itemInfo = nil
+	for spellName, rankInfos in pairs(classReagents) do		
+		for rankIndex = 1, #rankInfos do
+			local rankInfo = rankInfos[rankIndex]
+			local spellRank = 'Rank ' .. rankInfo[1]
 
-				-- find the highest level item available for the player from the subtable
-				for k1, v1 in pairs(v) do
-					-- select the first usable reagent based on player level
-					if itemInfo == nil and v1[2] <= playerLevel then						
-						itemInfo = v1		
-
-						if itemName == k1 then
-							itemCount = v1[1]
-						end
-					-- select the highest usable reagent based on player level
-					elseif itemInfo ~= nil and v1[2] <= playerLevel and v1[2] > itemInfo[2] then
-						itemInfo = v1
-
-						if itemName == k1 then
-							itemCount = v1[1]
-						end					
-					end
+			if GetSpellBookItemName(spellName, spellRank) then
+				if itemName == rankInfo[2] then 
+					itemCount = rankInfo[3]
+					spellId = GetSpellInfo(spellName, spellRank)
+					spellInfo = {spellId, spellName, spellRank}
+				else 
+					itemCount = 0
 				end
 			end
-		else			
-			if k == itemName then itemCount = v break end
 		end
-
-		-- if an item with the same name was found, stop processing the reagents table
-		if itemCount > 0 then break end
 	end
 
-	return itemCount
+	return itemCount, spellInfo
 end
 
 local function OnEvent(event, ...)
@@ -172,7 +159,7 @@ local function OnEvent(event, ...)
 	for itemIndex = 1, numItems do
 		local itemName, _, price, quantity, numAvailable, isPurchasable = GetMerchantItemInfo(itemIndex)		
 
-		local requiredItemCount = GetRequiredItemCountForPlayer(itemName)
+		local requiredItemCount, spellInfo = GetRequiredItemCountForPlayer(itemName)
 		local posessItemCount = GetItemCount(itemName) or 0
 		local buyItemCount = requiredItemCount - posessItemCount
 
@@ -188,8 +175,9 @@ local function OnEvent(event, ...)
 			return
 		end
 
-		if buyItemCount > 0 then 			
-			Fixate:Print('Buy ' .. itemName .. ' x' .. buyItemCount)
+		if buyItemCount > 0 then 								
+			local spellLink = "|Hspell:" .. spellInfo[1] .."|h|r|cff71d5ff[" .. spellInfo[2] .. " (" .. spellInfo[3] .. ")]|r|h"
+			Fixate:Print('Buy ' .. itemName .. ' x' .. buyItemCount .. ' for ' .. spellLink)
 			BuyMerchantItem(itemIndex, buyItemCount)
 		end
 	end
